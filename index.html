@@ -2,397 +2,399 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>State Machine Content Update</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Debug Buddy</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      margin: 0;
+      background-color: #000;
+      color: #fff;
+    }
 
-        button {
-            margin: 5px;
-            padding: 10px 15px;
-            cursor: pointer;
-        }
+    button {
+      margin: 5px;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
 
+    .ag-format-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
 
-        .ag-format-container {
-  width: 1142px;
-  margin: 0 auto;
-}
+    .ag-courses_box {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px 0;
+    }
 
+    .ag-courses_item {
+      flex-basis: calc(33.333% - 30px);
+      margin: 15px;
+      overflow: hidden;
+      border-radius: 28px;
+      background-color: #121212;
+      color: #fff;
+      text-align: left;
+    }
 
-body {
-  background-color: #000;
-}
-.ag-courses_box {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: start;
-  -ms-flex-align: start;
-  align-items: flex-start;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 50px 0;
-}
-.ag-courses_item {
-  -ms-flex-preferred-size: calc(33.33333% - 30px);
-  flex-basis: calc(33.33333% - 30px);
+    .ag-courses-item_link {
+      display: block;
+      padding: 20px;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+      border-radius: 28px;
+      transition: transform 0.3s, background-color 0.3s;
+    }
 
-  margin: 0 15px 30px;
+    .ag-courses-item_link:hover {
+      transform: scale(1.05);
+      background-color: #333;
+    }
 
-  overflow: hidden;
+    .ag-courses-item_bg {
+      height: 128px;
+      width: 128px;
+      background-color: #f9b234;
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      border-radius: 50%;
+      transition: transform 0.5s ease;
+      z-index: 1;
+    }
 
-  border-radius: 28px;
-}
-.ag-courses-item_link {
-  display: block;
-  padding: 30px 20px;
-  background-color: #121212;
+    .ag-courses_item:nth-child(2n) .ag-courses-item_bg {
+      background-color: #3ecd5e;
+    }
 
-  overflow: hidden;
+    .ag-courses_item:nth-child(3n) .ag-courses-item_bg {
+      background-color: #e44002;
+    }
 
-  position: relative;
-}
-.ag-courses-item_link:hover,
-.ag-courses-item_link:hover .ag-courses-item_date {
-  text-decoration: none;
-  color: #FFF;
-}
-.ag-courses-item_link:hover .ag-courses-item_bg {
-  -webkit-transform: scale(10);
-  -ms-transform: scale(10);
-  transform: scale(10);
-}
-.ag-courses-item_title {
-  min-height: 87px;
-  margin: 0 0 25px;
+    .ag-courses-item_title {
+      font-weight: bold;
+      font-size: 20px;
+      position: relative;
+      z-index: 2;
+    }
 
-  overflow: hidden;
+    .card {
+      margin: 10px auto;
+      max-width: 400px;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+      font-size: 18px;
+    }
 
-  font-weight: bold;
-  font-size: 30px;
-  color: #FFF;
+    .animateMF {
+      animation: fadeIn 1s forwards;
+    }
 
-  z-index: 2;
-  position: relative;
-}
-.ag-courses-item_date-box {
-  font-size: 18px;
-  color: #FFF;
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
 
-  z-index: 2;
-  position: relative;
-}
-.ag-courses-item_date {
-  font-weight: bold;
-  color: #f9b234;
+      to {
+        opacity: 1;
+      }
+    }
 
-  -webkit-transition: color .5s ease;
-  -o-transition: color .5s ease;
-  transition: color .5s ease
-}
-.ag-courses-item_bg {
-  height: 128px;
-  width: 128px;
-  background-color: #f9b234;
+    @media (max-width: 979px) {
+      .ag-courses_item {
+        flex-basis: calc(50% - 30px);
+      }
 
-  z-index: 1;
-  position: absolute;
-  top: -75px;
-  right: -75px;
+      .ag-courses-item_title {
+        font-size: 18px;
+      }
+    }
 
-  border-radius: 50%;
+    @media (max-width: 639px) {
+      .ag-courses_item {
+        flex-basis: 100%;
+      }
 
-  -webkit-transition: all .5s ease;
-  -o-transition: all .5s ease;
-  transition: all .5s ease;
-}
-.ag-courses_item:nth-child(2n) .ag-courses-item_bg {
-  background-color: #3ecd5e;
-}
-.ag-courses_item:nth-child(3n) .ag-courses-item_bg {
-  background-color: #e44002;
-}
-.ag-courses_item:nth-child(4n) .ag-courses-item_bg {
-  background-color: #952aff;
-}
-.ag-courses_item:nth-child(5n) .ag-courses-item_bg {
-  background-color: #cd3e94;
-}
-.ag-courses_item:nth-child(6n) .ag-courses-item_bg {
-  background-color: #4c49ea;
-}
+      .ag-courses-item_title {
+        font-size: 16px;
+      }
+    }
 
+    @media (max-width: 480px) {
+      body {
+        padding: 10px;
+      }
 
-
-@media only screen and (max-width: 979px) {
-  .ag-courses_item {
-    -ms-flex-preferred-size: calc(50% - 30px);
-    flex-basis: calc(50% - 30px);
-  }
-  .ag-courses-item_title {
-    font-size: 24px;
-  }
-}
-
-@media only screen and (max-width: 767px) {
-  .ag-format-container {
-    width: 96%;
-  }
-
-}
-@media only screen and (max-width: 639px) {
-  .ag-courses_item {
-    -ms-flex-preferred-size: 100%;
-    flex-basis: 100%;
-  }
-  .ag-courses-item_title {
-    min-height: 72px;
-    line-height: 1;
-
-    font-size: 24px;
-  }
-  .ag-courses-item_link {
-    padding: 22px 40px;
-  }
-  .ag-courses-item_date-box {
-    font-size: 16px;
-  }
-}
-
-.site-container {
-  display: grid;
-  place-items: center;
-  
-  padding: 1em;
-}
-
-
-.card {
-  max-width: 300px;
-  min-height: 100px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
-  max-width: 500px;
-  height: 100px;
-  padding: 35px;
-
-  border: 1px solid rgba(255, 255, 255, .25);
-  border-radius: 20px;
-  background-color: rgba(255, 255, 255, 0.45);
-  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25);
-
-  backdrop-filter: blur(15px);
-}
-    </style>
+      .card {
+        font-size: 16px;
+        padding: 15px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-    <div class="site-container">
-        <div id="optionalContent" class="card">
-          <p>Bug Reported! 🐛</p>
-        </div>  
-        <div id="content" class="card">
-          <p>Is it on a new feature?</p>
-        </div>  
+  <div class="site-container">
+    <div id="optionalContent" class="card animateMF">
+      Bug Reported! 🐛
     </div>
+    <div id="content" class="card animateMF">
+      <p>Is it on a new feature?</p>
+    </div>
+  </div>
 
-<!--    <div id="optionalContent" class="content">
+  <!--    <div id="optionalContent" class="content">
         
     </div>
     <div id="content" class="content">
         
     </div>
 -->
-    <div class="ag-format-container">
-        <div class="ag-courses_box">
-          <div class="ag-courses_item">
-            <a onclick="changeState(112,null)" class="ag-courses-item_link">
-              <div class="ag-courses-item_bg">
-              </div>
-              <div class="ag-courses-item_title">
-                Yes B
-              </div>
-            </a>
+  <div class="ag-format-container">
+    <div class="ag-courses_box">
+      <div class="ag-courses_item animateMF">
+        <a onclick="changeState(112,null)" class="ag-courses-item_link">
+          <div class="ag-courses-item_bg">
           </div>
-          <div class="ag-courses_item">
-            <a onclick="changeState(102,null)" class="ag-courses-item_link">
-              <div class="ag-courses-item_bg">
-              </div>
-              <div class="ag-courses-item_title">
-                No, existing feature B
-              </div>
-            </a>
+          <div class="ag-courses-item_title">
+            Yes B
           </div>
-          <div class="ag-courses_item" hidden>
-            <a onclick="changeState(101,null)" class="ag-courses-item_link">
-              <div class="ag-courses-item_bg">
-              </div>
-              <div class="ag-courses-item_title">
-                Welcome to the source code!
-              </div>
-            </a>
+        </a>
+      </div>
+      <div class="ag-courses_item animateMF">
+        <a onclick="changeState(102,null)" class="ag-courses-item_link">
+          <div class="ag-courses-item_bg">
           </div>
-        </div>
+          <div class="ag-courses-item_title">
+            No, existing feature B
+          </div>
+        </a>
+      </div>
+      <div class="ag-courses_item animateMF" hidden>
+        <a onclick="changeState(101,null)" class="ag-courses-item_link">
+          <div class="ag-courses-item_bg">
+          </div>
+          <div class="ag-courses-item_title">
+            Welcome to the source code!
+          </div>
+        </a>
+      </div>
     </div>
-    
+  </div>
 
 
-    <button onclick="changeState(112,null)" hidden>Yes</button>
-    <button onclick="changeState(102,null)" hidden>No, existing feature</button>
-    <button onclick="changeState(101,null)" hidden>Welcome to the source code!</button>
 
-    <script>
-        // Define states as objects
-        const states = {
-            101: {  content: "Is it on a new feature?", 
-                    options: [
-                        { id: 112, text: 'Yes', optionalContentID: 201 }, 
-                        { id: 102, text: 'No, existing feature', optionalContentID: null }] 
-                 },
-            102: {  content: "Was it working before?", 
-                    options: [
-                        { id: 112, text: 'No, I just found out it never worked', optionalContentID: 201 }, 
-                        { id: 103, text: 'Yes', optionalContentID: 203 }] },
-            103: {  content: "Is code the same in both implementation?", 
-                    options: [
-                        { id: 110, text: 'No', optionalContentID: 211 }, 
-                        { id: 104, text: 'Yes', optionalContentID: 204 }] },
-            104: {  content: "Are data sources the same in both implementations?", 
-                    options: [
-                        { id: 105, text: 'Yes', optionalContentID: 205 }, 
-                        { id: 109, text: 'No', optionalContentID: 210 }] },
-            105: {  content: "Are dependencies the same in both implementations?", 
-                    options: [
-                        { id: 109, text: 'No', optionalContentID: 208 }, 
-                        { id: 106, text: 'Yes', optionalContentID: 206 }] },
-            106: {  content: "Are environments and executing contexts exactly the same?", 
-                    options: [
-                        { id: 109, text: 'No', optionalContentID: 207 }, 
-                        { id: 107, text: 'Yes', optionalContentID: null }] },
-            107: {  content: "Are you COMPLETELY SURE that everything is exactly the same?", 
-                    options: [
-                        { id: 103, text: 'Uhh... wait...Let me re-check the ...', optionalContentID: null }, 
-                        { id: 108, text: 'It\'s hard to align environments and/or executing contexts', optionalContentID: 209 }] },
-            108: {  content: "Monitoring solutions are showing any insights on how to fix the bug?", 
-                    options: [
-                        { id: 118, text: 'Still Nothing', optionalContentID: null }, 
-                        { id: 109, text: 'Yes! Found the root cause!', optionalContentID: null }] },
-            109: {  content: "Changing this depends on an external tean or third party?", 
-                    options: [
-                        { id: 301, text: 'Yes', optionalContentID: 217 }, 
-                        { id: 110, text: 'No', optionalContentID: null }] },
-            110: {  content: "Aligning gave you the insights to propose a fix", 
-                    options: [
-                        { id: 112, text: 'No', optionalContentID: null }, 
-                        { id: 111, text: 'Yes', optionalContentID: null }] },                       
-            111: {  content: "Implementing the fix would require a major refactor or large codebase update?", 
-                    options: [
-                        { id: 115, text: 'Nah', optionalContentID: null }, 
-                        { id: 116, text: 'Yes', optionalContentID: 213 }] },
-            112: {  content: "Do you have reference working code?", 
-                    options: [
-                        { id: 103, text: 'Yes', optionalContentID: 202 }, 
-                        { id: 114, text: 'No', optionalContentID: null }] },
-            113: {  content: "Is there any blocker for you to find a working code example? (e.g. proprietary code, compiled, etc)", 
-                    options: [
-                        { id: 112, text: 'No, (or maybe, but I found a workaround)', optionalContentID: 201 }, 
-                        { id: 301, text: 'Yes!', optionalContentID: null }] },
-            114: {  content: "Have you seen any reference of what you're trying to achieve? (even outside your project)", 
-                    options: [
-                        { id: 113, text: 'Yes', optionalContentID: null }, 
-                        { id: 301, text: 'No', optionalContentID: null }] },
-            115: {  content: "Will this fix impact a large amount of your users?", 
-                    options: [
-                        { id: 117, text: 'Not Really', optionalContentID: 212 }, 
-                        { id: 116, text: 'Yes', optionalContentID: 213 }] },
-            116: {  content: "Can a hotfix work as a temporary solution?", 
-                    options: [
-                        { id: 117, text: 'Sure', optionalContentID: 212 }, 
-                        { id: 301, text: 'Nope :( ', optionalContentID: 214 }] },
-            117: {  content: "Did you add automated tests to account for this bug?", 
-                    options: [
-                        { id: 117, text: 'No, I don\'t have any automated testing setup/tool', optionalContentID: 215 }, 
-                        { id: 303, text: 'Nah, debugging is my passion', optionalContentID: null },
-                        { id: 302, text: 'Of course I did!', optionalContentID: null }] },
-            118: {  content: "Can you replicate the bug in a debugging execution context CONSISTENTLY?", 
-                    options: [
-                        { id: 107, text: 'Yes', optionalContentID: null }, 
-                        { id: 301, text: 'No', optionalContentID: 216 }] },
-            301: {  content: "Escalate! (to your TL, PM, Eng. Manager, to GitHub issues, to StackOverflow)", 
-                    options: [{ id: 401, text: 'Or Hire the guy who made this website. He is an expert debugger!'}] },
-            302: {  content: "Commit the fix!", 
-                    options: [{ id: 401, text: 'And thank the guy who made this website!'}] },
-            303: {  content: "Bye! See you again REAL soon", 
-                    options: [{ id: 401, text: 'Or maybe we can work together?'}] },
-            
-        };
-        const optionalContent = {
-            201: { content: "Search for example of working (e.g. in your code base, in the web) preferably in isolation" },
-            202: { content: "Search for differences with your implementation (in your development environment or debugging context)" },
-            203: { content: "Search for the last version that worked" },
-            204: { content: "Search for input and output data (e.g. API calls, DB info, DB Schema)" },
-            205: { content: "Search for differences in dependency versions" },
-            206: { content: "Search for differences in environment (Browser Version, OS, Executing Context)" },
-            207: { content: "Align environments and executing contexts with your solution as close as possible" },
-            208: { content: "Align dependency versions with your solution" },
-            209: { content: "Implement/tweak monitoring or instrumentation solutions that allow you to check insights on the faulty execution context" },
-            210: { content: "Align the data sources with your solution" },
-            211: { content: "Find out how can you align your code with the found implementation" },
-            212: { content: "Make sure you add and/or update unit tests to increase test coverage" },
-            213: { content: "Check if a hotfix or temporary solution is viable in this context" },
-            214: { content: "Plan for a definitive fix/refactor (create tickets, document solution, etc)" },
-            215: { content: "Implement an automated testing setup/tool" },
-            216: { content: "Involve another person that can run along these same steps and validate your findings" },
-            217: { content: "Inform the third party about the issue and track the conversation outcome" }
+  <button onclick="changeState(112,null)" hidden>Yes</button>
+  <button onclick="changeState(102,null)" hidden>No, existing feature</button>
+  <button onclick="changeState(101,null)" hidden>Welcome to the source code!</button>
+
+  <script>
+    // Define states as objects
+    const states = {
+      101: {
+        content: "Is it on a new feature?",
+        options: [
+          { id: 112, text: 'Yes', optionalContentID: 201 },
+          { id: 102, text: 'No, existing feature', optionalContentID: null }]
+      },
+      102: {
+        content: "Was it working before?",
+        options: [
+          { id: 103, text: 'Yes', optionalContentID: 203 },
+          { id: 112, text: 'No, I just found out it never worked', optionalContentID: 201 }]
+      },
+      103: {
+        content: "Is code the same in both implementation?",
+        options: [
+          { id: 104, text: 'Yes', optionalContentID: 204 },
+          { id: 110, text: 'No', optionalContentID: 211 }]
+      },
+      104: {
+        content: "Are data sources the same in both implementations?",
+        options: [
+          { id: 105, text: 'Yes', optionalContentID: 205 },
+          { id: 109, text: 'No', optionalContentID: 210 }]
+      },
+      105: {
+        content: "Are dependencies the same in both implementations?",
+        options: [{ id: 106, text: 'Yes', optionalContentID: 206 },
+        { id: 109, text: 'No', optionalContentID: 208 }
+        ]
+      },
+      106: {
+        content: "Are environments and executing contexts exactly the same?",
+        options: [{ id: 107, text: 'Yes', optionalContentID: null },
+        { id: 109, text: 'No', optionalContentID: 207 },
+        { id: 108, text: 'It\'s hard to align environments and/or executing contexts', optionalContentID: 209 }
+        ]
+      },
+      107: {
+        content: "Are you COMPLETELY SURE that everything is exactly the same?",
+        options: [
+          { id: 103, text: 'Uhh... wait...Let me re-check the ...', optionalContentID: null },
+          { id: 108, text: 'It\'s hard to align environments and/or executing contexts', optionalContentID: 209 }]
+      },
+      108: {
+        content: "Monitoring solutions are showing any insights on how to fix the bug?",
+        options: [{ id: 109, text: 'Yes! Found the root cause!', optionalContentID: null },
+        { id: 118, text: 'Still Nothing', optionalContentID: null }
+        ]
+      },
+      109: {
+        content: "Changing this depends on an external tean or third party?",
+        options: [
+          { id: 301, text: 'Yes', optionalContentID: 217 },
+          { id: 110, text: 'No', optionalContentID: null }]
+      },
+      110: {
+        content: "Aligning gave you the insights to propose a fix",
+        options: [{ id: 111, text: 'Yes', optionalContentID: null },
+        { id: 112, text: 'No', optionalContentID: null }
+        ]
+      },
+      111: {
+        content: "Implementing the fix would require a major refactor or large codebase update?",
+        options: [{ id: 116, text: 'Yes', optionalContentID: 213 },
+        { id: 115, text: 'Nah', optionalContentID: null }
+        ]
+      },
+      112: {
+        content: "Do you have reference working code?",
+        options: [
+          { id: 103, text: 'Yes', optionalContentID: 202 },
+          { id: 114, text: 'No', optionalContentID: null }]
+      },
+      113: {
+        content: "Is there any blocker for you to find a working code example? (e.g. proprietary code, compiled, etc)",
+        options: [{ id: 301, text: 'Yes!', optionalContentID: null },
+        { id: 112, text: 'No, (or maybe, but I found a workaround)', optionalContentID: 201 }
+        ]
+      },
+      114: {
+        content: "Have you seen any reference of what you're trying to achieve? (even outside your project)",
+        options: [
+          { id: 113, text: 'Yes', optionalContentID: null },
+          { id: 301, text: 'No', optionalContentID: null }]
+      },
+      115: {
+        content: "Will this fix impact a large amount of your users?",
+        options: [{ id: 116, text: 'Yes', optionalContentID: 213 },
+        { id: 117, text: 'Not Really', optionalContentID: 212 }
+        ]
+      },
+      116: {
+        content: "Can a hotfix work as a temporary solution?",
+        options: [
+          { id: 117, text: 'Sure', optionalContentID: 212 },
+          { id: 301, text: 'Nope :( ', optionalContentID: 214 }]
+      },
+      117: {
+        content: "Did you add automated tests to account for this bug?",
+        options: [
+          { id: 117, text: 'No, I don\'t have any automated testing setup/tool', optionalContentID: 215 },
+          { id: 303, text: 'Nah, debugging is my passion', optionalContentID: null },
+          { id: 302, text: 'Of course I did!', optionalContentID: null }]
+      },
+      118: {
+        content: "Can you replicate the bug in a debugging execution context CONSISTENTLY?",
+        options: [
+          { id: 107, text: 'Yes', optionalContentID: null },
+          { id: 301, text: 'No', optionalContentID: 216 }]
+      },
+      301: {
+        content: "Escalate! (to your TL, PM, Eng. Manager, to GitHub issues, to StackOverflow)",
+        options: [{ id: 401, text: 'Or Hire the guy who made this website. He is an expert debugger!' }]
+      },
+      302: {
+        content: "Commit the fix!",
+        options: [{ id: 401, text: 'And thank the guy who made this website!' }]
+      },
+      303: {
+        content: "Bye! See you again REAL soon",
+        options: [{ id: 401, text: 'Or maybe we can work together?' }]
+      },
+
+    };
+    const optionalContent = {
+      201: { content: "Search for example of working (e.g. in your code base, in the web) preferably in isolation" },
+      202: { content: "Search for differences with your implementation (in your development environment or debugging context)" },
+      203: { content: "Search for the last version that worked" },
+      204: { content: "Search for input and output data (e.g. API calls, DB info, DB Schema)" },
+      205: { content: "Search for differences in dependency versions" },
+      206: { content: "Search for differences in environment (Browser Version, OS, Executing Context)" },
+      207: { content: "Align environments and executing contexts with your solution as close as possible" },
+      208: { content: "Align dependency versions with your solution" },
+      209: { content: "Implement/tweak monitoring or instrumentation solutions that allow you to check insights on the faulty execution context" },
+      210: { content: "Align the data sources with your solution" },
+      211: { content: "Find out how can you align your code with the found implementation" },
+      212: { content: "Make sure you add and/or update unit tests to increase test coverage" },
+      213: { content: "Check if a hotfix or temporary solution is viable in this context" },
+      214: { content: "Plan for a definitive fix/refactor (create tickets, document solution, etc)" },
+      215: { content: "Implement an automated testing setup/tool" },
+      216: { content: "Involve another person that can run along these same steps and validate your findings" },
+      217: { content: "Inform the third party about the issue and track the conversation outcome" }
+    }
+    let currentStateID = 101; // Start with "Idle"
+
+    // Function to change state
+    function changeState(nextStateID, optionalContentID) {
+      const nextState = states[nextStateID];
+      document.getElementById("content").querySelector('p').innerText = nextState.content;
+      const optionalContentElement = document.getElementById("optionalContent");
+      if (optionalContentID != null) {
+        optionalContentElement.innerText = optionalContent[optionalContentID].content;
+        optionalContentElement.style.display = 'block';
+      }
+      else {
+        optionalContentElement.innerText = "";
+        optionalContentElement.style.display = 'none';
+      }
+      currentStateID = nextStateID; // Update the current state
+      updateButtonLabels();
+      let cards = Array.from(document.getElementsByClassName("animateMF"));
+      let delay = 1;
+      for (let card of cards) {
+        setTimeout(() => {
+          card.style.opacity = "";
+          card.classList.add('animateMF');
+        }, (200 * delay));
+        card.classList.remove('animateMF');
+        card.style.opacity = 0;
+        delay++;
+      }
+    }
+
+    // Function to update button labels dynamically
+    function updateButtonLabels() {
+      const nextStates = states[currentStateID].options;
+      const buttons = document.querySelectorAll(".ag-courses_item");
+      buttons.forEach(ele => ele.hidden = true)
+      nextStates.forEach((nextState, index) => {
+        buttons[index].querySelector('a .ag-courses-item_title').innerText = `${nextState.text}`;
+        buttons[index].querySelector('a').setAttribute("onclick", `changeState(${nextState.id},${nextState.optionalContentID})`);
+        buttons[index].hidden = false;
+        if (nextState.id === 401) {
+          buttons[index].querySelector('a').setAttribute("onclick", `location.href='https:\\\\www.linkedin.com/in/rajattarade'`)
         }
-        let currentStateID = 101; // Start with "Idle"
+      });
+    }
 
-        // Function to change state
-        function changeState(nextStateID, optionalContentID) {
-            const nextState = states[nextStateID];
-            document.getElementById("content").querySelector('p').innerText = nextState.content;
-            const optionalContentElement = document.getElementById("optionalContent");
-            if (optionalContentID != null) {
-                optionalContentElement.innerText = optionalContent[optionalContentID].content;
-                optionalContentElement.hidden = false;
-            }
-            else {
-                optionalContentElement.innerText = "";
-                optionalContentElement.hidden = true;
-            }
-            currentStateID = nextStateID; // Update the current state
-            updateButtonLabels();
-        }
-
-        // Function to update button labels dynamically
-        function updateButtonLabels() {
-            const nextStates = states[currentStateID].options;
-            const buttons = document.querySelectorAll(".ag-courses_item");
-            buttons.forEach(ele => ele.hidden = true)
-            nextStates.forEach((nextState, index) => {
-                buttons[index].querySelector('a .ag-courses-item_title').innerText = `${nextState.text}`;
-                buttons[index].querySelector('a').setAttribute("onclick", `changeState(${nextState.id},${nextState.optionalContentID})`);
-                buttons[index].hidden = false;
-                if(nextState.id === 401)
-                {
-                    buttons[index].querySelector('a').setAttribute("onclick", `location.href='https:\\\\www.linkedin.com/in/rajattarade'`)
-                }
-            });
-        }
-
-        // Initialize buttons on page load
-        updateButtonLabels();
-    </script>
+    // Initialize buttons on page load
+    updateButtonLabels();
+  </script>
 </body>
 
 </html>
